@@ -52,10 +52,7 @@ public class SudokuBoard extends View {
         }
     }
 
-    public void invalidate(Context context) {
-        invalidate();
-        Toast.makeText(context, "Invalid", Toast.LENGTH_SHORT).show();
-    }
+    
 
     @Override
     protected void onMeasure(int width, int height){
