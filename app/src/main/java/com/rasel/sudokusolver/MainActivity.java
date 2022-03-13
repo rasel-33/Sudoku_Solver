@@ -1,0 +1,103 @@
+package com.rasel.sudokusolver;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+
+public class MainActivity extends AppCompatActivity {
+
+    private SudokuBoard gameBoard;
+    private Solver gameBoardSolver;
+
+    private Button solveBTN;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        gameBoard = findViewById(R.id.SudokuBoard);
+        gameBoardSolver = gameBoard.getSolver();
+
+        solveBTN = findViewById(R.id.solveButton);
+
+    }
+
+    public void BTNOnePress(View view){
+        gameBoardSolver.setNumberPos(1);
+        gameBoard.invalidate(this);
+    }
+
+    public void BTNTwoPress(View view){
+        gameBoardSolver.setNumberPos(2);
+        gameBoard.invalidate(this);
+    }
+
+    public void BTNThreePress(View view){
+        gameBoardSolver.setNumberPos(3);
+        gameBoard.invalidate(this);
+    }
+
+    public void BTNFourPress(View view){
+        gameBoardSolver.setNumberPos(4);
+        gameBoard.invalidate(this);
+    }
+
+    public void BTNFivePress(View view){
+        gameBoardSolver.setNumberPos(5);
+        gameBoard.invalidate(this);
+    }
+
+    public void BTNSixPress(View view){
+        gameBoardSolver.setNumberPos(6);
+        gameBoard.invalidate(this);
+    }
+
+    public void BTNSevenPress(View view){
+        gameBoardSolver.setNumberPos(7);
+        gameBoard.invalidate(this);
+    }
+
+    public void BTNEightPress(View view){
+        gameBoardSolver.setNumberPos(8);
+        gameBoard.invalidate(this);
+    }
+
+    public void BTNNinePress(View view){
+        gameBoardSolver.setNumberPos(9);
+        gameBoard.invalidate(this);
+    }
+
+    public void solve(View view){
+        if (solveBTN.getText().toString().equals(getString(R.string.solve))){
+            solveBTN.setText(getString(R.string.clear));
+
+            gameBoardSolver.getEmptyBoxIndexes();
+
+            SolveBoardThread solveBoardThread = new SolveBoardThread();
+
+            new Thread(solveBoardThread).start();
+
+            Toast.makeText(this,"Your Sudoku is Solved",Toast.LENGTH_SHORT).show();
+
+            gameBoard.invalidate();
+
+        }
+        else{
+            solveBTN.setText(getString(R.string.solve));
+
+            gameBoardSolver.resetBoard();
+            gameBoard.invalidate();
+        }
+    }
+
+    class SolveBoardThread implements Runnable{
+        @Override
+        public void run(){
+            gameBoardSolver.solve(gameBoard);
+        }
+    }
+}
